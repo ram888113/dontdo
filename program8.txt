@@ -1,0 +1,104 @@
+package com.example.prgm12;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    Button btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9,btn0,btnStar,btnHash,btnCall,btnSave,btnDel;
+    EditText txtPhone;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        btn1 = (Button) findViewById(R.id.btn1);
+        btn2 = (Button) findViewById(R.id.btn2);
+        btn3 = (Button) findViewById(R.id.btn3);
+        btn4 = (Button) findViewById(R.id.btn4);
+        btn5 = (Button) findViewById(R.id.btn5);
+        btn6 = (Button) findViewById(R.id.btn6);
+        btn7 = (Button) findViewById(R.id.btn7);
+        btn8 = (Button) findViewById(R.id.btn8);
+        btn9 = (Button) findViewById(R.id.btn9);
+        btn0 = (Button) findViewById(R.id.btn0);
+        btnStar = (Button) findViewById(R.id.btnstar);
+        btnHash = (Button) findViewById(R.id.btnhash);
+        btnCall = (Button) findViewById(R.id.btncall);
+        btnSave = (Button) findViewById(R.id.btnsave);
+        btnDel = (Button) findViewById(R.id.btndel);
+        txtPhone = (EditText) findViewById(R.id.editTextPhone);
+        txtPhone.setText("");
+
+        btn1.setOnClickListener(this);
+        btn2.setOnClickListener(this);
+        btn3.setOnClickListener(this);
+        btn4.setOnClickListener(this);
+        btn5.setOnClickListener(this);
+        btn6.setOnClickListener(this);
+        btn7.setOnClickListener(this);
+        btn8.setOnClickListener(this);
+        btn9.setOnClickListener(this);
+        btn0.setOnClickListener(this);
+        btnSave.setOnClickListener(this);
+        btnStar.setOnClickListener(this);
+        btnHash.setOnClickListener(this);
+        btnDel.setOnClickListener(this);
+        btnCall.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.equals(btn1))
+            txtPhone.append("1");
+        else if(v.equals(btn2))
+            txtPhone.append("2");
+        else if(v.equals(btn3))
+            txtPhone.append("3");
+        else if(v.equals(btn4))
+            txtPhone.append("4");
+        else if(v.equals(btn5))
+            txtPhone.append("5");
+        else if(v.equals(btn6))
+            txtPhone.append("6");
+        else if(v.equals(btn7))
+            txtPhone.append("7");
+        else if(v.equals(btn8))
+            txtPhone.append("8");
+        else if(v.equals(btn9))
+            txtPhone.append("9");
+        else if(v.equals(btn0))
+            txtPhone.append("0");
+        else if(v.equals(btnStar))
+            txtPhone.append("*");
+        else if(v.equals(btnHash))
+            txtPhone.append("#");
+        else if(v.equals(btnDel)){
+            String data = txtPhone.getText().toString();
+            if(data.length()>0)
+                txtPhone.setText(data.substring(0,data.length()-1));
+            else
+                txtPhone.setText("");
+        }
+        else if(v.equals(btnSave)){
+            Intent it = new Intent(ContactsContract.Intents.Insert.ACTION);
+            it.setType(ContactsContract.RawContacts.CONTENT_TYPE);
+            it.putExtra(ContactsContract.Intents.Insert.NAME,"PRAJWAL");
+            it.putExtra(ContactsContract.Intents.Insert.PHONE,txtPhone.getText().toString());
+            startActivity(it);
+        }
+        else if(v.equals(btnCall)){
+            String data = txtPhone.getText().toString();
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse("tel:"+data));
+            startActivity(intent);
+        }
+
+    }
+}
